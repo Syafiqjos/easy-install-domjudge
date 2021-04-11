@@ -9,7 +9,6 @@ Reference : [DOMServer Manual](https://www.domjudge.org/docs/manual/7.3/install-
 ### 1. Initialize
 ```
 cd ~
-
 ```
 
 ### 2. Download DOMJudge
@@ -17,7 +16,6 @@ cd ~
 wget https://www.domjudge.org/releases/domjudge-7.3.3.tar.gz
 tar -xf domjudge-7.3.3.tar.gz
 mv domjudge-7.3.3 domjudge
-
 ```
 
 ### 3. Install Requirements
@@ -26,7 +24,6 @@ sudo apt install acl zip unzip mariadb-server apache2 \
       php php-fpm php-gd php-cli php-intl php-mbstring php-mysql \
       php-curl php-json php-xml php-zip composer ntp \
       libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
-
 ```
 
 
@@ -37,7 +34,6 @@ cd ~/domjudge
 ./configure --prefix=$HOME/domjudge
 make domserver
 sudo make install-domserver
-
 ```
 
 ### 5. Generate Database
@@ -45,7 +41,6 @@ sudo make install-domserver
 cd ~/domjudge/domserver/bin
 ./dj_setup_database genpass
 sudo ./dj_setup_database -u root -r install
-
 ```
 
 ### 6. Setting up Apache (php 7.4)
@@ -56,7 +51,6 @@ sudo a2enmod proxy_fcgi setenvif rewrite
 sudo a2enconf php7.4-fpm domjudge
 sudo service php7.4-fpm reload
 sudo service apache2 reload
-
 ```
 
 ## Install Judgehost VM
@@ -65,7 +59,6 @@ Reference : [Judgehost Manual](https://www.domjudge.org/docs/manual/7.3/install-
 ### 1. Initialize
 ```
 cd ~
-
 ```
 
 ### 2. Download DOMJudge
@@ -73,7 +66,6 @@ cd ~
 wget https://www.domjudge.org/releases/domjudge-7.3.3.tar.gz
 tar -xf domjudge-7.3.3.tar.gz
 mv domjudge-7.3.3 domjudge
-
 ```
 
 ### 3. Install Requirements
@@ -83,7 +75,6 @@ sudo apt install make sudo debootstrap libcgroup-dev lsof \
       gcc g++ default-jre-headless default-jdk-headless \
       ghc fp-compiler \
       libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
-
 ```
 
 ### 4. Make Judgehost
@@ -92,14 +83,12 @@ cd ~/domjudge
 ./configure --prefix=$HOME/domjudge
 make judgehost
 sudo make install-judgehost
-
 ```
 
 ### 5. Add User
 ```
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-0
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-1
-
 ```
 
 ### 6. Sudo Permissions
@@ -112,15 +101,12 @@ sudo cp sudoers-domjudge /etc/sudoers.d/
 ```
 cd judgehost/bin
 sudo ./dj_make_chroot
-
 ```
 
 ### 8. Edit grub
-# Change line of  ```/etc/default/grub```
-
+Change line of  ```/etc/default/grub```
 ```
 sudo nano /etc/default/grub
-
 ```
 
 Comment ```GRUB_CMDLINE_LINUX_DEFAULT="<something>"``` 
@@ -129,13 +115,11 @@ And add this line below previous commented line ```GRUB_CMDLINE_LINUX_DEFAULT="q
 Then 
 ```
 sudo update-grub
-
 ```
 
 ### 9. Reboot
 ```
 reboot
-
 ```
 
 ### 10. create cgroup
@@ -143,7 +127,6 @@ reboot
 cd ~/domjudge/judge
 sudo ./create_cgroups
 sudo systemctl enable create-cgroups --now
-
 ```
 
 ### 11. REST API Credentials
