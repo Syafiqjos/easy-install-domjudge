@@ -15,17 +15,15 @@ cd ~
 ```
 wget https://www.domjudge.org/releases/domjudge-7.3.3.tar.gz
 tar -xf domjudge-7.3.3.tar.gz
-mv domjudge-7.3.3.tar.gz domjudge
+mv domjudge-7.3.3 domjudge
 ```
 
 ### Install Requirements
 ```
 sudo apt install acl zip unzip mariadb-server apache2 \
       php php-fpm php-gd php-cli php-intl php-mbstring php-mysql \
-      php-curl php-json php-xml php-zip composer ntp
-
-sudo apt install libcgroup-dev
-sudo apt install libjsoncpp-dev
+      php-curl php-json php-xml php-zip composer ntp \
+      libcgroup-dev libjsoncpp-dev
 ```
 
 ### Make DOMServer
@@ -65,7 +63,7 @@ cd ~
 ```
 wget https://www.domjudge.org/releases/domjudge-7.3.3.tar.gz
 tar -xf domjudge-7.3.3.tar.gz
-mv domjudge-7.3.3.tar.gz domjudge
+mv domjudge-7.3.3 domjudge
 ```
 
 ### Install Requirements
@@ -98,7 +96,9 @@ cd judgehost/bin
 
 ### Edit grub
 Change line of  ```/etc/default/grub```
+
 To ```GRUB_CMDLINE_LINUX_DEFAULT="quiet cgroup_enable=memory swapaccount=1"```
+
 Then ```update-grub```
 
 ### create cgroup
