@@ -27,8 +27,6 @@ sudo apt install acl zip unzip mariadb-server apache2 \
       libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev net-tools
 ```
 
-
-
 ### 4. Make DOMServer
 ```
 cd ~/domjudge
@@ -55,7 +53,7 @@ sudo service apache2 reload
 ```
 
 ### 7. REST API Secret
-Save this secret, will be used in judgehost VM
+This is DOMServer Secret Key, will be used in judgehost VM
 ```
 cat ~/domjudge/domserver/etc/restapi.secret
 ```
@@ -145,8 +143,8 @@ sudo systemctl enable create-cgroups --now
 ```
 cat ~/domjudge/judgehost/etc/restapi.secret
 ```
-Set <API_URL> to Installed DOMServer IP
-Set <Secret_Key> to Installed DOMServer Secret Key before
+- Set <API_URL> to Installed DOMServer IP
+- Set <Secret_Key> to Installed DOMServer Secret Key
 
 ### 12. Start judgedaemon
 ```
