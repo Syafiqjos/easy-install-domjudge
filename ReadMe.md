@@ -1,7 +1,8 @@
 # Easy Install DOMJudge VM
 Quick and Easy install DOMJudge with 2 VM (Separated DOMServer and Judgehost)
-DOMJudge : [DOMJudge](https://www.domjudge.org)
-Download : [DOMJudge Download](https://www.domjudge.org/download)
+
+DOMJudge Official : [DOMJudge](https://www.domjudge.org)
+DOMJudge Download : [DOMJudge Download](https://www.domjudge.org/download)
 
 ## Install DOMServer VM
 Reference : [DOMServer Manual](https://www.domjudge.org/docs/manual/7.3/install-domserver.html)
@@ -23,7 +24,7 @@ mv domjudge-7.3.3 domjudge
 sudo apt install acl zip unzip mariadb-server apache2 \
       php php-fpm php-gd php-cli php-intl php-mbstring php-mysql \
       php-curl php-json php-xml php-zip composer ntp \
-      libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
+      libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev net-tools
 ```
 
 
@@ -53,6 +54,17 @@ sudo service php7.4-fpm reload
 sudo service apache2 reload
 ```
 
+### 7. REST API Secret
+Save this secret, will be used in judgehost VM
+```
+cat ~/domjudge/domserver/etc/restapi.secret
+```
+
+### 8. DOMServer Addresss
+```
+ifconfig
+```
+
 ## Install Judgehost VM
 Reference : [Judgehost Manual](https://www.domjudge.org/docs/manual/7.3/install-judgehost.html)
 
@@ -74,7 +86,7 @@ sudo apt install make sudo debootstrap libcgroup-dev lsof \
       php-cli php-curl php-json php-xml php-zip procps \
       gcc g++ default-jre-headless default-jdk-headless \
       ghc fp-compiler \
-      libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
+      libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev net-tools
 ```
 
 ### 4. Make Judgehost
@@ -131,13 +143,43 @@ sudo systemctl enable create-cgroups --now
 
 ### 11. REST API Credentials
 ```
-
-
+cat ~/domjudge/judgehost/etc/restapi.secret
 ```
+Set <API_URL> to Installed DOMServer IP
+Set <Secret_Key> to Installed DOMServer Secret Key before
 
 ### 12. Start judgedaemon
 ```
+cd ~/domjudge/lib/systemd/system
+sudo cp domjudge-judgehost.service domjudge-judgehost-0.service
+sudo cp domjudge-judgehost.service domjudge-judgehost-1.service
+
+sudo ln -s -f ~/domjudge/lib/systemd/system/* /etc/systemd/system/
+
+sudo sed -i 's/-n 0/-n 0/' domjudge-judgehost-0.service
+sudo sed -i 's/-n 0/-n 1/' domjudge-judgehost-1.service
+
 sudo systemctl enable domjudge-judgehost-0
+sudo systemctl enable domjudge-judgehost-1
+sudo systemctl start  domjudge-judgehost-0
 sudo systemctl start  domjudge-judgehost-1
 
+sudo systemctl status domjudge-judgehost*
 ```
+
+## Extra
+### DOMServer Address
+```
+ifconfig
+```
+
+### DOMJudge Admin Login
+Username : admin
+Password get from DOMServer VM :
+```
+cat ~/domjudge/domserver/etc/initial_admin_password.secret
+```
+
+### DOMJudge Dummy Team Login
+Login : dummy
+Password : dummy
