@@ -22,9 +22,11 @@ mv domjudge-7.3.3 domjudge
 ```
 sudo apt install acl zip unzip mariadb-server apache2 \
       php php-fpm php-gd php-cli php-intl php-mbstring php-mysql \
-      php-curl php-json php-xml php-zip composer ntp \
-      libcgroup-dev libjsoncpp-dev
+      php-curl php-json php-xml php-zip composer ntp
+sudo apt install libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
 ```
+
+
 
 ### Make DOMServer
 ```
@@ -37,18 +39,18 @@ sudo make install-domserver
 ### Generate Database
 ```
 cd ~/domjudge/domserver/bin
-dj_setup_database genpass
-dj_setup_database root -r install
+./dj_setup_database genpass
+sudo ./dj_setup_database -u root -r install
 ```
 
 ### Setting up Apache (php 7.4)
 ```
-ln -s ~/domjudge/domserver/etc/apache.conf /etc/apache2/conf-available/domjudge.conf
-ln -s ~/domjudge/domserver/etc/domjudge-fpm.conf /etc/php/7.4/fpm/pool.d/domjudge.conf
-a2enmod proxy_fcgi setenvif rewrite
-a2enconf php7.4-fpm domjudge
-service php7.4-fpm reload
-service apache2 reload
+sudo ln -s ~/domjudge/domserver/etc/apache.conf /etc/apache2/conf-available/domjudge.conf
+sudo ln -s ~/domjudge/domserver/etc/domjudge-fpm.conf /etc/php/7.4/fpm/pool.d/domjudge.conf
+sudo a2enmod proxy_fcgi setenvif rewrite
+sudo a2enconf php7.4-fpm domjudge
+sudo service php7.4-fpm reload
+sudo service apache2 reload
 ```
 
 ## Install Judgehost VM
@@ -72,6 +74,7 @@ sudo apt install make sudo debootstrap libcgroup-dev lsof \
       php-cli php-curl php-json php-xml php-zip procps \
       gcc g++ default-jre-headless default-jdk-headless \
       ghc fp-compiler
+sudo apt install libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev
 ```
 
 ### Make Judgehost
