@@ -182,4 +182,5 @@ cat ~/domjudge/domserver/etc/initial_admin_password.secret
 
 ### DOMJudge Dummy Team Login
 Login : dummy
+
 Password : dummy
