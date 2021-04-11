@@ -69,10 +69,12 @@ mv domjudge-7.3.3.tar.gz domjudge
 ```
 
 ### Install Requirements
+```
 sudo apt install make sudo debootstrap libcgroup-dev lsof \
       php-cli php-curl php-json php-xml php-zip procps \
       gcc g++ default-jre-headless default-jdk-headless \
       ghc fp-compiler
+```
 
 ### Make Judgehost
 ```
