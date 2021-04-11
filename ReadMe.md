@@ -1,5 +1,11 @@
 # Easy Install DOMJudge VM
-## Install DOMServer
+Quick and Easy install DOMJudge with 2 VM (Separated DOMServer and Judgehost)
+DOMJudge : [DOMJudge](https://www.domjudge.org)
+Download : [DOMJudge Download](https://www.domjudge.org/download)
+
+## Install DOMServer VM
+Reference : [DOMServer Manual](https://www.domjudge.org/docs/manual/7.3/install-domserver.html)
+
 ### Initialize
 ```
 cd ~
@@ -48,6 +54,8 @@ service apache2 reload
 ```
 
 ## Install Judgehost VM
+Reference : [Judgehost Manual](https://www.domjudge.org/docs/manual/7.3/install-judgehost.html)
+
 ### Initialize
 ```
 cd ~
