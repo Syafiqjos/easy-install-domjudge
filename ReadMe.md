@@ -174,13 +174,12 @@ ifconfig
 ```
 
 ### DOMJudge Admin Login
-Username : admin
-Password get from DOMServer VM :
+- Username : admin
+- Password get from DOMServer VM :
 ```
 cat ~/domjudge/domserver/etc/initial_admin_password.secret
 ```
 
 ### DOMJudge Dummy Team Login
-Login : dummy
-
-Password : dummy
+- Username : dummy
+- Password : dummy
