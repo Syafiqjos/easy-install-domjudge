@@ -181,3 +181,6 @@ cat ~/domjudge/domserver/etc/initial_admin_password.secret
 ### DOMJudge Dummy Team Login
 - Username : dummy
 - Password : dummy
+
+# References
+- https://github.com/DOMjudge/domjudge/issues/855
