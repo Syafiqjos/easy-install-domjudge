@@ -97,6 +97,7 @@ sudo make install-judgehost
 
 ### 5. Add User
 ```
+sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-0
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-1
 ```
