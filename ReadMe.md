@@ -7,6 +7,17 @@ DOMJudge Download : [DOMJudge Download](https://www.domjudge.org/download)
 ## Install DOMServer VM
 Reference : [DOMServer Manual](https://www.domjudge.org/docs/manual/7.3/install-domserver.html)
 
+### 0. Update and Upgrade Repository
+```
+sudo apt update
+```
+
+then
+
+```
+sudo apt upgrade
+```
+
 ### 1. Initialize
 ```
 cd ~
@@ -66,6 +77,17 @@ ifconfig
 ## Install Judgehost VM
 Reference : [Judgehost Manual](https://www.domjudge.org/docs/manual/7.3/install-judgehost.html)
 
+### 0. Update and Upgrade Repository
+```
+sudo apt update
+```
+
+then
+
+```
+sudo apt upgrade
+```
+
 ### 1. Initialize
 ```
 cd ~
@@ -95,26 +117,49 @@ make judgehost
 sudo make install-judgehost
 ```
 
-### 5. Add User
+### 5. REST API Credentials
+This need to be done in the **Domserver** not in **Judgehost**. In this step we'll get Domserver restapi.secret information.
+
+```
+cat ~/domjudge/judgehost/etc/restapi.secret
+```
+
+With above command running in the Domserver, you'll get something like this. Copy the line that have a letter default (in this case line 3).
+
+```
+# Randomly generated on host gcloud-3-zydhan, Sat Aug  7 10:29:32 UTC 2021
+# Format: '<ID> <API url> <user> <password>'
+default http://localhost/domjudge/api   judgehost       XXXXXXXXXXX
+```
+
+Copy that line and back to the **Judgehost**. In Judgehost visit `~/domjudge/judgehost/etc/restapi.secret` if it doesn't exist create that file first. After that just copy the line you got from previous Domserver restapi.secret. Change the url into your Domserver Api URL.
+
+Tip : Try to go to Domserver IP and test API url connection. If it does return something like this, then it's a valid url.
+
+```
+{"api_version":4,"domjudge_version":"7.3.3","environment":"dev","doc_url":"https://xxx.xxx.xxx.xxx/some/domjudge/url/api/doc"}
+```
+
+### 6. Add User
 ```
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-0
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-1
 ```
 
-### 6. Sudo Permissions
+### 7. Sudo Permissions
 ```
 cd ~/domjudge/judgehost/etc
 sudo cp sudoers-domjudge /etc/sudoers.d/
 ```
 
-### 7. Create chroot environment
+### 8. Create chroot environment
 ```
-cd judgehost/bin
+cd ~/domjudge/judgehost/bin
 sudo ./dj_make_chroot
 ```
 
-### 8. Edit grub
+### 9. Edit grub
 Change line of  ```/etc/default/grub```
 ```
 sudo nano /etc/default/grub
@@ -128,26 +173,12 @@ Then
 sudo update-grub
 ```
 
-### 9. Reboot
+### 10. Reboot
 ```
 reboot
 ```
 
-### 10. create cgroup
-```
-cd ~/domjudge/judge
-sudo ./create_cgroups
-sudo systemctl enable create-cgroups --now
-```
-
-### 11. REST API Credentials
-```
-cat ~/domjudge/judgehost/etc/restapi.secret
-```
-- Set <API_URL> to Installed DOMServer IP
-- Set <Secret_Key> to Installed DOMServer Secret Key
-
-### 12. Start judgedaemon
+### 11. create necessary users
 ```
 cd ~/domjudge/lib/systemd/system
 sudo cp domjudge-judgehost.service domjudge-judgehost-0.service
@@ -157,7 +188,17 @@ sudo ln -s -f ~/domjudge/lib/systemd/system/* /etc/systemd/system/
 
 sudo sed -i 's/-n 0/-n 0/' domjudge-judgehost-0.service
 sudo sed -i 's/-n 0/-n 1/' domjudge-judgehost-1.service
+```
 
+### 12. create cgroup
+```
+cd ~/domjudge/judge
+sudo ./create_cgroups
+sudo systemctl enable create-cgroups --now
+```
+
+### 13. Start judgedaemon
+```
 sudo systemctl enable domjudge-judgehost-0
 sudo systemctl enable domjudge-judgehost-1
 sudo systemctl start  domjudge-judgehost-0
