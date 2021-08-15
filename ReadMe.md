@@ -109,12 +109,11 @@ sudo apt install make sudo debootstrap libcgroup-dev lsof \
       libcgroup-dev libjsoncpp-dev make gcc g++ libcurl4-openssl-dev net-tools
 ```
 
-### 4. Make Judgehost
+### 4. Configure Judgehost
 ```
 cd ~/domjudge
 ./configure --prefix=$HOME/domjudge
 make judgehost
-sudo make install-judgehost
 ```
 
 ### 5. REST API Credentials
@@ -144,26 +143,31 @@ Tip : Try to go to Domserver IP and test API url connection. If it does return s
 {"api_version":4,"domjudge_version":"7.3.3","environment":"dev","doc_url":"https://xxx.xxx.xxx.xxx/some/domjudge/url/api/doc"}
 ```
 
-### 6. Add User
+### 6. Make Judgehost
+```
+sudo make install-judgehost
+```
+
+### 7. Add User
 ```
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-0
 sudo useradd -d /nonexistent -U -M -s /bin/false domjudge-run-1
 ```
 
-### 7. Sudo Permissions
+### 8. Sudo Permissions
 ```
 cd ~/domjudge/judgehost/etc
 sudo cp sudoers-domjudge /etc/sudoers.d/
 ```
 
-### 8. Create chroot environment
+### 9. Create chroot environment
 ```
 cd ~/domjudge/judgehost/bin
 sudo ./dj_make_chroot
 ```
 
-### 9. Edit grub
+### 10. Edit grub
 Change line of  ```/etc/default/grub```
 ```
 sudo nano /etc/default/grub
@@ -177,12 +181,12 @@ Then
 sudo update-grub
 ```
 
-### 10. Reboot
+### 11. Reboot
 ```
-reboot
+sudo reboot
 ```
 
-### 11. create necessary users
+### 12. create necessary users
 ```
 cd ~/domjudge/lib/systemd/system
 sudo cp domjudge-judgehost.service domjudge-judgehost-0.service
@@ -194,14 +198,14 @@ sudo sed -i 's/-n 0/-n 0/' domjudge-judgehost-0.service
 sudo sed -i 's/-n 0/-n 1/' domjudge-judgehost-1.service
 ```
 
-### 12. create cgroup
+### 13. create cgroup
 ```
 cd ~/domjudge/judge
 sudo ./create_cgroups
 sudo systemctl enable create-cgroups --now
 ```
 
-### 13. Start judgedaemon
+### 14. Start judgedaemon
 ```
 sudo systemctl enable domjudge-judgehost-0
 sudo systemctl enable domjudge-judgehost-1
