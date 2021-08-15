@@ -132,7 +132,11 @@ With above command running in the Domserver, you'll get something like this. Cop
 default http://localhost/domjudge/api   judgehost       XXXXXXXXXXX
 ```
 
-Copy that line and back to the **Judgehost**. In Judgehost visit `~/domjudge/judgehost/etc/restapi.secret` if it doesn't exist create that file first. After that just copy the line you got from previous Domserver restapi.secret. Change the url into your Domserver Api URL.
+Copy that line and back to the **Judgehost**. In Judgehost visit `~/domjudge/judgehost/etc/restapi.secret` if it doesn't exist create that file first. After that just copy the line you got from previous Domserver restapi.secret. Change the url into your Domserver API URL.
+
+```
+default https://xxx.xxx.xxx.xxx/some/domjudge/url/api   judgehost       XXXXXXXXXXX
+```
 
 Tip : Try to go to Domserver IP and test API url connection. If it does return something like this, then it's a valid url.
 
